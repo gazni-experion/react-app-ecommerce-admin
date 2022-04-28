@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.css";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Tooltip } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -14,88 +14,102 @@ import {
   UnorderedListOutlined,
   BookOutlined,
   PlaySquareOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
-const { Header, Sider, Content } = Layout;
+
+
+const { Header, Sider, Content, Footer} = Layout;
 
 function Navbar() {
   const [state, setState] = useState(false);
 
   const toggle = () => setState(!state);
 
+  let items =[
+    {
+      
+      key: "1",
+      icon: <DashboardOutlined />,
+      label: <Link to="dashboard">DASHBOARD</Link>,
+    },
+    {
+      key: "2",
+      icon: <UserOutlined />,
+      label: <Link to="users">MANAGE</Link>,
+    },
+    {
+      key: "3",
+      icon: <OrderedListOutlined />,
+      label: <Link to="orders">ORDERS</Link>,
+
+    },
+    {
+      key: "4",
+      icon: <PieChartOutlined />,
+      label: <Link to="*">CATEGORIES</Link>,
+    },
+    {
+      key: "5",
+      icon: <GroupOutlined />,
+      label: <Link to="products">PRODUCTS</Link>,
+    },
+    {
+      key: "6",
+      icon: <PlaySquareOutlined />,
+      label: <Link to="*">BANNERS</Link>,
+    },
+    {
+      key: "7",
+      icon: <SmileOutlined />,
+      label: <Link to="*">REVIEWS</Link>,
+    },
+    {
+      key: "8",
+      icon: <UnorderedListOutlined />,
+      label: <Link to="*">ENQUIRIES</Link>,
+    },
+    {
+      key: "9",
+      icon: <BookOutlined />,
+      label: <Link to="*">ABOUT US</Link>,
+    },
+  ] ;
+
   return (
     <Layout hasSider>
       <Sider
         style={{
           overflow: "auto",
-          height: "100vh",
+          height: "100%",
+          backgroundColor: "#fff",
+          color: "black"
         }}
         trigger={null}
         collapsible
         collapsed={state}
+        
       >
-        <div className="logo" />
+        <div className="logo" >Logo</div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <DashboardOutlined />,
-              label: "DASHBOARD",
-            },
-            {
-              key: "2",
-              icon: <UserOutlined />,
-              label: "MANAGE",
-            },
-            {
-              key: "3",
-              icon: <OrderedListOutlined />,
-              label: "ORDERS",
-            },
-            {
-              key: "4",
-              icon: <PieChartOutlined />,
-              label: "CATEGORIES",
-            },
-            {
-              key: "5",
-              icon: <GroupOutlined />,
-              label: "PRODUCTS",
-            },
-            {
-              key: "6",
-              icon: <PlaySquareOutlined />,
-              label: "BANNERS",
-            },
-            {
-              key: "7",
-              icon: <SmileOutlined />,
-              label: "REVIEWS",
-            },
-            {
-              key: "8",
-              icon: <UnorderedListOutlined />,
-              label: "ENQUIRIES",
-            },
-            {
-              key: "9",
-              icon: <BookOutlined />,
-              label: "ABOUT US",
-            },
-          ]}
+          items ={items}
+          style={{ height: "500%",  color: "#833768" }}
         />
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 5, fontSize:25}}>
+        <Header className="site-layout-background" style={{ padding: 5, fontSize:25,  backgroundColor:"#ffe8ff18"}}>
           {state ? (
             <MenuUnfoldOutlined onClick={toggle} />
           ) : (
             <MenuFoldOutlined onClick={toggle} />
           )}
-         <span style={{margin:30}}>Welcome Admin</span>
+         <span className="header">Welcome Admin</span>
+         <Tooltip placement="bottom" title="logout">
+         <LogoutOutlined />
+         </Tooltip>
         </Header>
         <Content
           className="site-layout-background"
@@ -107,6 +121,7 @@ function Navbar() {
         >
           <Outlet />
         </Content>
+    
       </Layout>
     </Layout>
   );

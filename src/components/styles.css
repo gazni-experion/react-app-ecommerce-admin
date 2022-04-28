@@ -19,10 +19,40 @@
   .site-layout .site-layout-background {
     background: #fff;
   }
-.container{
-    margin: 1%;
-}
+
 .container h2{
     text-align: center;
 }
 
+.ant-menu-title-content a{
+    color: #833768;
+}
+
+.logo{
+  border: solid 1px #833768;
+  text-align: center;
+  padding: 1%;
+  font-style: italic;
+}
+
+.header{
+  margin-left: auto;
+  padding: 1%;
+}
+.anticon-logout{
+  color: #8b8b8b;
+  font-size: large;
+  cursor: pointer;
+ margin: 2%;
+  float: inline-end;
+}
+.anticon-logout :hover{
+  color: #833768;
+}
+
+.ant-layout{
+  background: white;
+}
+.ant-layout-sider-children{
+  background-color: #ffe8ff18;
+}

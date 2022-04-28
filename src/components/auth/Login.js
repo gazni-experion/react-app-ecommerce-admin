@@ -15,7 +15,7 @@ const Login = () => {
       console.log("Welcome Admin");
 
       // Navigate to home page
-      navigate("home");
+      navigate("admin/dashboard");
     }
     else{
       alert("Invalid Credentials");
