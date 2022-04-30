@@ -24,6 +24,11 @@
     text-align: center;
 }
 
+.container .ant-btn{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
 .ant-menu-title-content a{
     color: #833768;
 }
@@ -56,3 +61,11 @@
 .ant-layout-sider-children{
   background-color: #ffe8ff18;
 }
+
+.ant-table-cell span{
+  display: flex;
+  justify-content: space-evenly;
+  font-size: medium;
+ 
+}
+

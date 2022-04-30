@@ -1,4 +1,4 @@
-import "./styles.css";
+import "../styles/styles.css";
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 

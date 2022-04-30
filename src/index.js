@@ -4,13 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './components/Home.js';
-import Users from './components/Users.js';
-import Orders from './components/Orders.js';
-import Products from './components/Products.js';
-import Navbar from './components/Navbar.js';
-import NoPage from './components/NoPage';
+import Home from './components/pages/Home.js';
+import Users from './components/pages/Users.js';
+import Orders from './components/pages/Orders.js';
+import Products from './components/pages/Products.js';
+import Navbar from './components/layout/Navbar.js';
+import NoPage from './components/pages/NoPage';
 import Login from './components/auth/Login';
+import Categories from './components/pages/Categories';
+import AddCategory from './components/pages/AddCategory';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +27,8 @@ root.render(
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
       <Route path="orders" element={<Orders />} />
+      <Route path="categories" element={<Categories />} />
+      <Route path="add-category" element={<AddCategory />} />
       </Route>
       <Route path="*" element={<NoPage />} />
       

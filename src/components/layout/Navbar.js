@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import React, { useState } from "react";
-import "./styles.css";
+import "../styles/styles.css";
 import { Layout, Menu, Tooltip } from "antd";
 import {
   MenuUnfoldOutlined,
@@ -47,7 +47,7 @@ function Navbar() {
     {
       key: "4",
       icon: <PieChartOutlined />,
-      label: <Link to="*">CATEGORIES</Link>,
+      label: <Link to="categories">CATEGORIES</Link>,
     },
     {
       key: "5",
