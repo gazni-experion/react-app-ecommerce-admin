@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "../styles/styles.css";
 import { Layout, Menu, Tooltip } from "antd";
@@ -19,12 +19,18 @@ import {
 
 
 
-const { Header, Sider, Content, Footer} = Layout;
+const { Header, Sider, Content} = Layout;
 
 function Navbar() {
+  let navigate = useNavigate();
   const [state, setState] = useState(false);
 
   const toggle = () => setState(!state);
+  const logout = () => {
+      // Navigate to Login page
+      navigate("/");
+      sessionStorage.clear();
+  };
 
   let items =[
     {
@@ -107,7 +113,7 @@ function Navbar() {
             <MenuFoldOutlined onClick={toggle} />
           )}
          <span className="header">Welcome Admin</span>
-         <Tooltip placement="bottom" title="logout">
+         <Tooltip placement="bottom" title="logout" onClick={logout}>
          <LogoutOutlined />
          </Tooltip>
         </Header>
@@ -127,4 +133,4 @@ function Navbar() {
   );
 }
 
-export default () => <Navbar />;
+export default Navbar;
