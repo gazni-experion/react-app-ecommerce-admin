@@ -9,12 +9,7 @@
 .trigger:hover {
     color: #1890ff;
   }
-  
- .logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
-  }
+
   
   .site-layout .site-layout-background {
     background: #fff;
@@ -50,6 +45,9 @@
 }
 
 .logo{
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
   border: solid 1px #833768;
   text-align: center;
   padding: 1%;
@@ -146,4 +144,17 @@
 .MuiPaper-root .MuiTypography-button{
   font-size: 15px;
   font-weight: bold;
+}
+
+.login-form {
+  max-width: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+}
+
+.login-form .MuiFormControl-fullWidth{
+margin-top: 2%;
+margin-bottom: 2%;
 }
