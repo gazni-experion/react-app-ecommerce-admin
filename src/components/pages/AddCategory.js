@@ -15,7 +15,7 @@ function AddCategory() {
       .then((res) => res.json())
       .then(
         (result) => {
-            if (result.message == "Category was created.") {
+            if (result.message === "Category was created.") {
                 console.log(result);
                 message.success(result.message); 
                 form.resetFields();
