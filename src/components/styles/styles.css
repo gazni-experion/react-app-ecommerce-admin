@@ -85,3 +85,65 @@
  
 }
 
+
+.editForm .anticon-left{
+  color: #642c50;
+  font-size: 200%;
+  cursor: pointer;
+
+}
+
+.editForm .anticon-left :hover{
+  color: #a334c5;
+  
+}
+
+.ant-card{
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ant-card-head-title{
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+.cards{
+  z-index: 0;
+  width: 100%;  
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+
+.MuiPaper-root:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 2px 2px 7px 3px rgba(0,0,0,0.25), 
+    -5px -5px 7px 3px rgba(0,0,0,0.22);
+}
+.MuiPaper-root{
+  background: #f7edf43b;
+  height: 150px;
+  width: 300px;
+  border-radius: 40px;
+  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  transition: 0.4s;
+}
+.MuiCardContent-root {
+  margin: 10px;
+  color: #833768;
+}
+
+.MuiCardContent-root .MuiSvgIcon-root {
+  float: inline-start;
+  margin: 10px;
+  font-size: 30px;
+}
+.MuiPaper-root .MuiTypography-button{
+  font-size: 15px;
+  font-weight: bold;
+}

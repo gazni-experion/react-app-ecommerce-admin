@@ -10,9 +10,9 @@ import Orders from './components/pages/Orders.js';
 import Products from './components/pages/Products.js';
 import Navbar from './components/layout/Navbar.js';
 import NoPage from './components/pages/NoPage';
-import Login from './components/auth/Login';
 import Categories from './components/pages/Categories';
 import AddCategory from './components/pages/AddCategory';
+import AddUser from './components/pages/AddUser';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,6 +29,7 @@ root.render(
       <Route path="orders" element={<Orders />} />
       <Route path="categories" element={<Categories />} />
       <Route path="add-category" element={<AddCategory />} />
+      <Route path="add-user" element={<AddUser />} />
       </Route>
       <Route path="*" element={<NoPage />} />
       

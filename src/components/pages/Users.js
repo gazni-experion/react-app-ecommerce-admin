@@ -1,90 +1,170 @@
+import React, { useState, useEffect } from "react";
+import { Table, Button, Popconfirm, Form, Typography, message } from "antd";
+import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import "../styles/styles.css";
 
-import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-
 function Users() {
-  const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    {
-      field: "name",
-      headerName: "Name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
-    { field: "firstName", headerName: "First name", width: 150 },
-    { field: "lastName", headerName: "Last name", width: 150 },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 90,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
+  let navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [data, setData] = useState(null);
+  const [refresh, setRefresh] = useState(0);
 
-      renderCell: (cellValues) => {
+  useEffect(() => {
+    fetch("http://localhost/RESTAPI/ecommerce/api/users/read.php")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setData(result.records);
+          console.log(result.records);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, [refresh]);
+
+  // Search filter
+  const search = (value) => {
+    if (value === "") {
+      setRefresh(refresh + 1);
+    } else {
+      fetch(
+        `http://localhost/RESTAPI/ecommerce/api/users/search.php?s=${value}`
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setData(result.records);
+            // console.log(result.records);
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  };
+
+  const deleteUser = (record) => {
+    console.log(record);
+    fetch("http://localhost/RESTAPI/ecommerce/api/users/delete.php", {
+      body: JSON.stringify({ id: record.userId }),
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result.message === "User deleted successfully!") {
+            console.log(result);
+            message.success(result.message);
+            setRefresh(refresh + 1);
+            console.log(refresh);
+          } else {
+            message.error(result.message);
+          }
+        },
+        (error) => {
+          console.log(error);
+          message.error(error.message);
+        }
+      );
+  };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "userId",
+      width: "5%",
+      sorter: (a, b) => a.userId - b.userId,
+    },
+    {
+      title: "User Name",
+      dataIndex: "userName",
+      width: "20%",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: "40%",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      width: "40%",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      width: "15%",
+    },
+    {
+      title: "Operation",
+      dataIndex: "userId",
+      width: "10%",
+      render: (_, record) => {
         return (
-          <div className="actions">
-            <span>
-              <EditOutlined
-                style={{ margin: "0px 20px 0px 20px" }}
-                onClick={(event) => {
-                  handleClick(event, cellValues);
-                  
-                }}
-              />
-            </span>{" "}
-            <span>
-              <DeleteOutlined
-                onClick={(event) => {
-                  handleClick(event, cellValues);
-                }}
-              />
-            </span>
-          </div>
+          <span>
+            <Typography.Link
+              onClick={() =>
+                navigate("/admin/add-user", {
+                  state: { name: "Update User", userId: record.userId },
+                })
+              }
+            >
+              <EditTwoTone />
+            </Typography.Link>
+            <Typography.Link id={record.userId}>
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => deleteUser(record)}
+              >
+                <DeleteTwoTone twoToneColor="#eb2f96" />
+              </Popconfirm>
+            </Typography.Link>
+          </span>
         );
       },
     },
   ];
-
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
-
-  const handleClick = (event, cellValues) => {
-    console.log(event);
-  }
+  const mergedColumns = columns.map((col) => col);
 
   return (
     <div className="container">
       <h2>Users</h2>
       <hr />
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          // checkboxSelection
+      <Button type="primary" onClick={() => navigate("/admin/add-user", {
+                  state: { name: "Add User", userId: "" },
+                })}>
+        Add User
+      </Button>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search users..."
+        onChange={(e) => {
+          search(e.target.value);
+        }}
+      />
+      <Form form={form} component={false}>
+        <Table
+          rowKey={(record) => record.userId}
+          bordered
+          dataSource={data}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            defaultPageSize: 5,
+          }}
         />
-      </div>
+      </Form>
     </div>
   );
 }
-
 export default Users;
