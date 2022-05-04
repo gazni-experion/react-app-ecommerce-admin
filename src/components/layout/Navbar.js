@@ -21,6 +21,8 @@ import {
 
 const { Header, Sider, Content} = Layout;
 
+const user = sessionStorage.getItem('userName')
+
 function Navbar() {
   let navigate = useNavigate();
   const [state, setState] = useState(false);
@@ -112,7 +114,7 @@ function Navbar() {
           ) : (
             <MenuFoldOutlined onClick={toggle} />
           )}
-         <span className="header">Welcome Admin</span>
+         <span className="header">Welcome Back {user}</span>
          <Tooltip placement="bottom" title="logout" onClick={logout}>
          <LogoutOutlined />
          </Tooltip>

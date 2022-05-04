@@ -44,9 +44,9 @@ function Login() {
         console.warn(response.status);
         if(response.data.jwt){
 
-          sessionStorage.setItem('token', 'response.data.jwt');
-          sessionStorage.setItem('userId', 'response.data.userId');
-          sessionStorage.setItem('userName', 'response.data.userName');
+          sessionStorage.setItem('token', response.data.jwt);
+          sessionStorage.setItem('userId', response.data.userId);
+          sessionStorage.setItem('userName', response.data.userName);
           navigate('/admin/dashboard');
         }
         else{
