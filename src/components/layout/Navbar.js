@@ -21,7 +21,7 @@ import {
 
 const { Header, Sider, Content} = Layout;
 
-const user = sessionStorage.getItem('userName')
+const user = localStorage.getItem('userName')
 
 function Navbar() {
   let navigate = useNavigate();
@@ -31,7 +31,7 @@ function Navbar() {
   const logout = () => {
       // Navigate to Login page
       navigate("/");
-      sessionStorage.clear();
+      localStorage.clear();
   };
 
   let items =[
@@ -80,7 +80,7 @@ function Navbar() {
     {
       key: "9",
       icon: <BookOutlined />,
-      label: <Link to="*">ABOUT US</Link>,
+      label: <Link to="about-us">ABOUT US</Link>,
     },
   ] ;
 

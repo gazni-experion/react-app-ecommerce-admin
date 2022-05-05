@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import '../config/config.js';
 
 const validationSchema = yup.object({
   email: yup
@@ -44,9 +45,9 @@ function Login() {
         console.warn(response.status);
         if(response.data.jwt){
 
-          sessionStorage.setItem('token', response.data.jwt);
-          sessionStorage.setItem('userId', response.data.userId);
-          sessionStorage.setItem('userName', response.data.userName);
+          localStorage.setItem('token', response.data.jwt);
+          localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('userName', response.data.userName);
           navigate('/admin/dashboard');
         }
         else{

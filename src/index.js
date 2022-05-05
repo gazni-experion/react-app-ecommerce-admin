@@ -13,15 +13,18 @@ import NoPage from './components/pages/NoPage';
 import Categories from './components/pages/Categories';
 import AddCategory from './components/pages/AddCategory';
 import AddUser from './components/pages/AddUser';
+import AboutUs from './components/pages/AboutUs';
+import { Provider } from 'react-redux'
+import store from './store'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
 <BrowserRouter>
     <Routes>
       <Route index element={<App />} />
-      
       <Route path="admin" element={<Navbar />} >
       <Route path="dashboard" element={<Home />} />
       <Route path="products" element={<Products />} />
@@ -30,13 +33,15 @@ root.render(
       <Route path="categories" element={<Categories />} />
       <Route path="add-category" element={<AddCategory />} />
       <Route path="add-user" element={<AddUser />} />
+      <Route path="about-us" element={<AboutUs />} />
       </Route>
       <Route path="*" element={<NoPage />} />
-      
-   
     </Routes>
     </BrowserRouter>
+    </Provider>
   </React.StrictMode>
+
+
 );
 
 // If you want to start measuring performance in your app, pass a function
