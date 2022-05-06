@@ -21,7 +21,7 @@
     text-align: center;
 }
 .container #search{
-  float: inline-end;
+  float: right;
     padding:  5px 0px 5px 50px; 
     border: none;
     border-radius: 10px;
@@ -35,6 +35,7 @@
     background-color: #f7edf43b;
     color: #363062c7;
     text-shadow: 2px 2px 4px #c3c1c1;
+    margin-right: 0;
 }
 
 .container .ant-btn{

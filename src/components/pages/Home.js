@@ -7,17 +7,19 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import GrainIcon from "@mui/icons-material/Grain";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import '../config/config.js';
 import {PostWithAuthToken} from '../config/api';
+import store from "../../store";
+import { GetAdminDetails } from "../redux/actions/authAction";
 
 const cust = "4";
 const orders = "13";
 let users = "7";
-
 function Home() {
   useEffect(() => {
+    console.log(store.getState());
     if(localStorage.getItem('token')){
+      GetAdminDetails();
       PostWithAuthToken('/auth/demo_validate.php')
       .then((res)=>{
         console.log(res);
