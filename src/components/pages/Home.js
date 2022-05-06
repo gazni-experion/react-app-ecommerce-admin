@@ -17,14 +17,14 @@ const orders = "13";
 let users = "7";
 function Home() {
   useEffect(() => {
+    // GetAdminDetails();
     console.log(store.getState());
-    if(localStorage.getItem('token')){
-      GetAdminDetails();
-      PostWithAuthToken('/auth/demo_validate.php')
-      .then((res)=>{
-        console.log(res);
-      } );
-    }
+    // if(localStorage.getItem('token')){
+    //   PostWithAuthToken('/auth/demo_validate.php')
+    //   .then((res)=>{
+    //     console.log(res);
+    //   } );
+    // }
   }, []);
 
   return (
