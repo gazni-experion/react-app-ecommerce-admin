@@ -16,6 +16,8 @@ import AddUser from './components/pages/AddUser';
 import AboutUs from './components/pages/AboutUs';
 import { Provider } from 'react-redux'
 import store from './store'
+import UpdateProfile from './components/admin/updateProfile'
+import Profile from './components/admin/profile'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -34,6 +36,8 @@ root.render(
       <Route path="add-category" element={<AddCategory />} />
       <Route path="add-user" element={<AddUser />} />
       <Route path="about-us" element={<AboutUs />} />
+      <Route path="update-profile" element={<UpdateProfile />} />
+      <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<NoPage />} />
     </Routes>

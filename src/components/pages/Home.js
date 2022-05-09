@@ -16,8 +16,8 @@ const cust = "4";
 const orders = "13";
 let users = "7";
 function Home() {
+  GetAdminDetails();
   useEffect(() => {
-    // GetAdminDetails();
     console.log(store.getState());
     // if(localStorage.getItem('token')){
     //   PostWithAuthToken('/auth/demo_validate.php')

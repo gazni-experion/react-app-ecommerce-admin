@@ -114,7 +114,7 @@ function Navbar() {
           ) : (
             <MenuFoldOutlined onClick={toggle} />
           )}
-         <span className="header">Welcome Back {user}</span>
+         <span className="header">Welcome Back <Link to="profile">{user}</Link></span>
          <Tooltip placement="bottom" title="logout" onClick={logout}>
          <LogoutOutlined />
          </Tooltip>
