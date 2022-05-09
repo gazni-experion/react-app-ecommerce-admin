@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Button, Modal, Form, Input, message } from "antd";
+import { PostWithAuthTokenAsync } from "../config/api";
 
 const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   const validateMessages = {
@@ -55,8 +57,8 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
           <Input.Password placeholder="Enter your current password" />
         </Form.Item>
         <Form.Item
-          name="password"
-          label="Password"
+          name="newPassword"
+          label="New Password"
           rules={[
             {
               required: true,
@@ -78,7 +80,7 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
         <Form.Item
           name="confirm"
           label="Confirm Password"
-          dependencies={["password"]}
+          dependencies={["newPassword"]}
           hasFeedback
           rules={[
             {
@@ -87,7 +89,7 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
+                if (!value || getFieldValue("newPassword") === value) {
                   setUpate(false);
                   return Promise.resolve();
                 }
@@ -104,10 +106,25 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
 };
 
 const ChangePassword = () => {
+  let navigate = useNavigate();
   const [visible, setVisible] = useState(false);
 
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
+    PostWithAuthTokenAsync('/users/changePassword.php',values)
+    .then((res)=> {
+    console.log(res.data.message);
+    if (res.data.message === "Password updated successfully") {
+      message.success(res.data.message)
+      localStorage.clear();
+      navigate('/');
+    }
+    else{
+      message.error(res.data.message)
+    }
+    })
+    .catch((e)=>console.log(e));
+    
     // setVisible(false);
   };
 

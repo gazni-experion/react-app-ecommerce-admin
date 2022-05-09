@@ -20,6 +20,18 @@ export const PostWithAuthToken = (url, data) => {
     }
 }
 
+export const PostWithAuthTokenAsync = async (url, data) => {
+    if(localStorage.getItem('token')){
+        setAuthToken(localStorage.getItem('token'));
+    } 
+    try {
+        const res = await axios.post(baseUrl + url, data,config);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
