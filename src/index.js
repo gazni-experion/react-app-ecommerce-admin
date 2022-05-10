@@ -22,6 +22,7 @@ import Protected from './components/auth/protected';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -41,7 +42,7 @@ root.render(
       <Route
  path="profile"
  element={
- <Protected isLoggedIn={true}>
+ <Protected >
  <Profile />
  </Protected>
  }

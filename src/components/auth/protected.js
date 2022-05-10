@@ -1,7 +1,12 @@
 import { Navigate } from "react-router-dom";
+import { GetAdminDetails } from '../redux/actions/authAction'
+import store from "../../store";
 
-const Protected = ({ isLoggedIn, children }) => {
- if (!isLoggedIn) {
+
+const Protected = ({ children }) => {
+    GetAdminDetails();
+    let loginStatus = store.getState().auth.isLoggedIn;
+ if (!loginStatus) {
  return <Navigate to="/" replace />;
  }
  return children;
