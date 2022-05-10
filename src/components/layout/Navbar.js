@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/styles.css";
 import { Layout, Menu, Tooltip } from "antd";
 import {
@@ -15,21 +15,35 @@ import {
   BookOutlined,
   PlaySquareOutlined,
   LogoutOutlined,
+  LoginOutlined
 } from "@ant-design/icons";
-
-
+import store from "../../store";
 
 const { Header, Sider, Content} = Layout;
 
-const user = localStorage.getItem('userName')
+const user = localStorage.getItem('userName');
 
 function Navbar() {
+
+let loginStatus = store.getState().auth.status;
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   let navigate = useNavigate();
   const [state, setState] = useState(false);
+
+
+  useEffect(() => {
+    if (loginStatus==='AUTH_SUCCESS') {
+      console.log(loginStatus);
+      setIsLoggedIn(true)
+      console.log(isLoggedIn);
+    } 
+  }, [loginStatus,isLoggedIn]);
 
   const toggle = () => setState(!state);
   const logout = () => {
       // Navigate to Login page
+      setIsLoggedIn(false);
       navigate("/");
       localStorage.clear();
   };
@@ -114,10 +128,17 @@ function Navbar() {
           ) : (
             <MenuFoldOutlined onClick={toggle} />
           )}
-         <span className="header">Welcome Back <Link to="profile">{user}</Link></span>
-         <Tooltip placement="bottom" title="logout" onClick={logout}>
+         <span className="header">
+         {isLoggedIn ? ( 
+        <Link to="profile">Welcome back - {user}</Link>
+ ) : (<Link to="/">Please Login</Link>)
+         }
+          </span>
+          {isLoggedIn?(
+          <Tooltip placement="bottom" title="logout" onClick={logout}>
          <LogoutOutlined />
-         </Tooltip>
+         </Tooltip>): null }
+         
         </Header>
         <Content
           className="site-layout-background"

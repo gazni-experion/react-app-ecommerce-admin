@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { Card, Avatar, Tooltip } from 'antd';
+import { Card, Avatar } from 'antd';
 import '../styles/styles.css'
 import {  Link } from "react-router-dom";
 import store from "../../store";

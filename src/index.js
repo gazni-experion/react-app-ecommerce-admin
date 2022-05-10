@@ -18,6 +18,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import UpdateProfile from './components/admin/updateProfile'
 import Profile from './components/admin/profile'
+import Protected from './components/auth/protected';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -37,7 +38,15 @@ root.render(
       <Route path="add-user" element={<AddUser />} />
       <Route path="about-us" element={<AboutUs />} />
       <Route path="update-profile" element={<UpdateProfile />} />
-      <Route path="profile" element={<Profile />} />
+      <Route
+ path="profile"
+ element={
+ <Protected isLoggedIn={true}>
+ <Profile />
+ </Protected>
+ }
+/>
+      {/* <Route path="profile" element={<Profile />} /> */}
       </Route>
       <Route path="*" element={<NoPage />} />
     </Routes>
