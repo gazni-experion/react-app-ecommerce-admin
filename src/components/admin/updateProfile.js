@@ -1,15 +1,26 @@
-
 import React, { useEffect, useState } from "react";
-import { Form, Input, message, Button, Space, Card, Select } from "antd";
-import { LeftOutlined } from "@ant-design/icons";
+import {
+  Form,
+  Input,
+  message,
+  Button,
+  Space,
+  Card,
+  Select,
+  Avatar,
+  Upload
+} from "antd";
+import { LeftOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../styles/styles.css";
-import { PostWithAuthToken } from "../config/api";
+import { PostWithAuthTokenAsync } from "../config/api";
 import store from "../../store";
 import { GetAdminDetails } from "../redux/actions/authAction";
-import { Alert } from 'antd';
+
 
 function UpdateProfile() {
+  
+  // Call redux hook
   GetAdminDetails();
 
   let navigate = useNavigate();
@@ -20,43 +31,34 @@ function UpdateProfile() {
     if (localStorage.getItem("token")) {
       console.log(profileDetails);
 
-         form.setFieldsValue({
-           userId:profileDetails.userId,
-           userName:profileDetails.userName,
-           email:profileDetails.email,
-           phoneNumber: profileDetails.phoneNumber,
-           gender:profileDetails.gender
-       });
+      form.setFieldsValue({
+        userId: profileDetails.userId,
+        userName: profileDetails.userName,
+        email: profileDetails.email,
+        phoneNumber: profileDetails.phoneNumber,
+        gender: profileDetails.gender,
+      });
     } else {
       navigate("/");
     }
-  }, [form]);
+  }, [form, profileDetails, navigate]);
 
   const onFinish = (values) => {
-      let data = JSON.stringify(values)
+    let data = JSON.stringify(values);
     console.log(data);
-    PostWithAuthToken('/users/update.php',data)
-      .then((res)=>{
-        console.log(res);
-      
-        <Alert
-      message="Success"
-      description="Profile updates successfully"
-      type="success"
-      showIcon
-      closable
-    />
-        
-        // else{
-        //     <Alert
-        //     message="Error"
-        //     description="Unable to update. Please try again!"
-        //     type="error"
-        //     showIcon
-        //     closable
-        //   />
-        // }
-      } );
+    
+    PostWithAuthTokenAsync("/users/update.php", data)
+    .then((res) => {
+      console.log(res);
+      if (res.status) {
+        alert("Profile update succefully")
+        navigate('/admin/dashboard')
+      }
+})
+.catch((e)=>{
+  console.log(e);
+  alert("Something went wrong please try again!");
+    });
   };
 
   const onFinishFailed = () => {
@@ -76,17 +78,17 @@ function UpdateProfile() {
   return (
     <div className="editForm">
       <LeftOutlined onClick={() => navigate("/admin/profile")} />
-      <Card title='Profile'>
-          <h3>User Id: {profileDetails.userId}</h3>
+      <Card title="Profile">
+        <h3>User Id: {profileDetails.userId}</h3>
         <Form
           validateMessages={validateMessages}
           form={form}
           layout="vertical"
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          autoComplete="off" 
+          autoComplete="off"
         >
-          <Form.Item label="userId" name="userId" >
+          <Form.Item label="userId" name="userId" hidden="true">
             <Input />
           </Form.Item>
           <Form.Item
@@ -105,14 +107,14 @@ function UpdateProfile() {
             label="Email"
             rules={[
               {
-                  required: true,
+                required: true,
                 type: "email",
               },
             ]}
           >
             <Input placeholder="Enter Email" />
           </Form.Item>
-          
+
           <Form.Item
             name="phoneNumber"
             label="Phone Number"
@@ -135,7 +137,7 @@ function UpdateProfile() {
               },
             ]}
           >
-            <Select placeholder="Select Gender" >
+            <Select placeholder="Select Gender">
               <Select.Option value="Male">Male</Select.Option>
               <Select.Option value="Female">Female</Select.Option>
               <Select.Option value="Other">Other</Select.Option>
@@ -144,7 +146,7 @@ function UpdateProfile() {
 
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit" >
+              <Button type="primary" htmlType="submit">
                 Update
               </Button>
             </Space>
