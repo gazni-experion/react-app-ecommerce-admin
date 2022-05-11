@@ -4,21 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './components/pages/Home.js';
-import Users from './components/pages/Users.js';
-import Orders from './components/pages/Orders.js';
-import Products from './components/pages/Products.js';
-import Navbar from './components/layout/Navbar.js';
-import NoPage from './components/pages/NoPage';
-import Categories from './components/pages/Categories';
-import AddCategory from './components/pages/AddCategory';
-import AddUser from './components/pages/AddUser';
-import AboutUs from './components/pages/AboutUs';
+import Home from './Pages/home';
+import Users from './Pages/users';
+import Orders from './Pages/orders';
+import Products from './Pages/products';
+import Navbar from './Components/Layout/navbar';
+import NoPage from './Pages/noPage';
+import Categories from './Pages/categories';
+import AddCategory from './Pages/addCategory';
+import AddUser from './Pages/addUser';
+import AboutUs from './Pages/aboutUs';
 import { Provider } from 'react-redux'
-import store from './store'
-import UpdateProfile from './components/admin/updateProfile'
-import Profile from './components/admin/profile'
-import Protected from './components/auth/protected';
+import store from './Store/store'
+import UpdateProfile from './Admin/updateProfile'
+import Profile from './Admin/profile'
+import Protected from './Auth/protected';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -47,8 +47,7 @@ root.render(
  </Protected>
  }
 />
-      {/* <Route path="profile" element={<Profile />} /> */}
-      </Route>
+</Route>
       <Route path="*" element={<NoPage />} />
     </Routes>
     </BrowserRouter>

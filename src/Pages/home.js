@@ -1,16 +1,13 @@
-import "../styles/styles.css";
+import "../Styles/styles.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import GrainIcon from "@mui/icons-material/Grain";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import '../config/config.js';
-import {PostWithAuthToken} from '../config/api';
-import store from "../../store";
-import { GetAdminDetails } from "../redux/actions/authAction";
+import React, { useEffect } from "react";
+import store from "../Store/store";
+import { GetAdminDetails } from "../Store/Actions/authAction";
 
 const cust = "4";
 const orders = "13";
@@ -19,12 +16,6 @@ function Home() {
   GetAdminDetails();
   useEffect(() => {
     console.log(store.getState());
-    // if(localStorage.getItem('token')){
-    //   PostWithAuthToken('/auth/demo_validate.php')
-    //   .then((res)=>{
-    //     console.log(res);
-    //   } );
-    // }
   }, []);
 
   return (

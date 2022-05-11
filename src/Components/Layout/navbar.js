@@ -1,6 +1,6 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import "../styles/styles.css";
+import "../../Styles/styles.css";
 import { Layout, Menu, Tooltip } from "antd";
 import {
   MenuUnfoldOutlined,
@@ -16,8 +16,8 @@ import {
   PlaySquareOutlined,
   LogoutOutlined
 } from "@ant-design/icons";
-import store from "../../store";
-import { GetAdminDetails } from "../Redux/Actions/authAction";
+import store from "../../Store/store";
+import { GetAdminDetails } from "../../Store/Actions/authAction";
 
 
 const { Header, Sider, Content} = Layout;

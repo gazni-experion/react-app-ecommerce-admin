@@ -2,7 +2,7 @@ import React, { useEffect} from "react";
 import { Form, Input, message, Button, Space, Card, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/styles.css";
+import "../Styles/styles.css";
 
 
 

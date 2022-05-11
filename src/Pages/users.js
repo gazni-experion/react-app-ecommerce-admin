@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Popconfirm, Form, Typography, message } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "../styles/styles.css";
+import "../Styles/styles.css";
 
 function Users() {
   let navigate = useNavigate();

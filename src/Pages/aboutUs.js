@@ -1,8 +1,8 @@
-import "../styles/styles.css";
+import "../Styles/styles.css";
 import React, { useEffect ,useState} from "react";
 import axios from 'axios';
 import { Form, Input, Button } from 'antd';
-import '../config/config.js';
+import '../Components/Config/api';
 
 
 function AboutUs() {

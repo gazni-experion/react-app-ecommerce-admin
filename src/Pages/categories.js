@@ -14,7 +14,7 @@ import {
   DeleteTwoTone,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "../styles/styles.css";
+import "../Styles/styles.css";
 
 const EditableCell = ({
   editing,

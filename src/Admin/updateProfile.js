@@ -12,10 +12,10 @@ import {
 } from "antd";
 import { LeftOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "../styles/styles.css";
-import { PostWithAuthTokenAsync } from "../config/api";
-import store from "../../store";
-import { GetAdminDetails } from "../redux/actions/authAction";
+import "../Styles/styles.css";
+import { PostWithAuthTokenAsync } from "../Components/Config/api";
+import store from "../Store/store";
+import { GetAdminDetails } from "../Store/Actions/authAction";
 
 
 function UpdateProfile() {

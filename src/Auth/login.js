@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import '../styles/styles.css';
+import '../Styles/styles.css';
 import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import '../config/config.js';
-import Loader from '../../Utils/loader';
+import '../Components/Config/config';
+import Loader from '../Components/Loader/loader';
 
 const validationSchema = yup.object({
   email: yup

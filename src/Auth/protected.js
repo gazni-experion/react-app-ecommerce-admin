@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { GetAdminDetails } from '../Redux/Actions/authAction'
-import store from "../../store";
+import { GetAdminDetails } from '../Store/Actions/authAction'
+import store from "../Store/store";
 
 
 const Protected = ({ children }) => {

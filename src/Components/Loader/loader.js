@@ -1,6 +1,6 @@
 import React from 'react'
 import {RotatingLines} from 'react-loader-spinner'
-import '../components/styles/styles.css'
+import "../../Styles/styles.css";
 
 export default function Loader({isLoading}) {
   

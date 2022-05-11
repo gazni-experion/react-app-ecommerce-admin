@@ -1,15 +1,12 @@
 import React, {useEffect} from 'react'
 import { Card, Avatar } from 'antd';
-import '../styles/styles.css'
+import '../Styles/styles.css'
 import {  Link } from "react-router-dom";
-import store from "../../store";
+import store from "../Store/store";
 import { useNavigate } from "react-router-dom";
-import { GetAdminDetails } from "../redux/actions/authAction";
+import { GetAdminDetails } from "../Store/Actions/authAction";
 import { UserOutlined, EditFilled } from '@ant-design/icons';
 import ChangePassword from "./changePassword";
-
-
-
 
 function Profile() {
     
