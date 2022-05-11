@@ -14,10 +14,11 @@ import {
   UnorderedListOutlined,
   BookOutlined,
   PlaySquareOutlined,
-  LogoutOutlined,
-  LoginOutlined
+  LogoutOutlined
 } from "@ant-design/icons";
 import store from "../../store";
+import { GetAdminDetails } from "../redux/actions/authAction";
+
 
 const { Header, Sider, Content} = Layout;
 
@@ -25,25 +26,19 @@ const user = localStorage.getItem('userName');
 
 function Navbar() {
 
-let loginStatus = store.getState().auth.status;
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  GetAdminDetails();
+
+let loginStatus = store.getState().auth.isLoggedIn;
+
   let navigate = useNavigate();
   const [state, setState] = useState(false);
 
-
   useEffect(() => {
-    if (loginStatus==='AUTH_SUCCESS') {
-      console.log(loginStatus);
-      setIsLoggedIn(true)
-      console.log(isLoggedIn);
-    } 
-  }, [loginStatus,isLoggedIn]);
-
+    console.log(loginStatus);
+  }, [loginStatus]);
   const toggle = () => setState(!state);
   const logout = () => {
       // Navigate to Login page
-      setIsLoggedIn(false);
       navigate("/");
       localStorage.clear();
   };
@@ -129,12 +124,12 @@ let loginStatus = store.getState().auth.status;
             <MenuFoldOutlined onClick={toggle} />
           )}
          <span className="header">
-         {isLoggedIn ? ( 
+         {loginStatus ? ( 
         <Link to="profile">Welcome back - {user}</Link>
  ) : (<Link to="/">Please Login</Link>)
          }
           </span>
-          {isLoggedIn?(
+          {loginStatus?(
           <Tooltip placement="bottom" title="logout" onClick={logout}>
          <LogoutOutlined />
          </Tooltip>): null }

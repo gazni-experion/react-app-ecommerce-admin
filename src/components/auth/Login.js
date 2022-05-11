@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import '../config/config.js';
+import Loader from '../../Utils/loader';
 
 const validationSchema = yup.object({
   email: yup
@@ -24,6 +25,7 @@ const validationSchema = yup.object({
 function Login() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   let navigate = useNavigate();
 
   const formik = useFormik({
@@ -35,6 +37,7 @@ function Login() {
     validationSchema: validationSchema,
   
     onSubmit: (values) => {
+      setIsLoading(true);
       setIsSubmitting(true);
       console.log(JSON.stringify(values, null, 2));
       axios.post('http://localhost/RESTAPI/ecommerce/api/auth/login.php', 
@@ -43,7 +46,7 @@ function Login() {
       .then(function (response) {
         console.log(response.data);
         console.warn(response.status);
-        if(response.data.jwt){
+        if(response.data.jwt) {
 
           localStorage.setItem('token', response.data.jwt);
           localStorage.setItem('userId', response.data.userId);
@@ -53,11 +56,16 @@ function Login() {
         else{
           alert('Invalid Credentials Please try again');
           setIsSubmitting(false);
+      setIsLoading(false);
         }
 
       })
       .catch(function (error) {
         console.log(error);
+        alert('Invalid Credentials Please try again');
+        setIsSubmitting(false);
+      setIsLoading(false);
+
       });
     },
   });
@@ -65,6 +73,7 @@ function Login() {
 
   return (
      <div className="login-form">
+       <Loader isLoading={isLoading}/>
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
@@ -74,7 +83,7 @@ function Login() {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
+          helperText={formik.touched.email || formik.errors.email}
         />
         <TextField
           fullWidth
@@ -85,7 +94,7 @@ function Login() {
           value={formik.values.passwords}
           onChange={formik.handleChange}
           error={formik.touched.passwords && Boolean(formik.errors.passwords)}
-          helperText={formik.touched.passwords && formik.errors.passwords}
+          helperText={formik.touched.passwords || formik.errors.passwords}
         />
         <Button color="primary" variant="contained" fullWidth type="submit" disabled={ !formik.isValid || isSubmitting}>
           Login
