@@ -17,7 +17,7 @@ import {
   LogoutOutlined
 } from "@ant-design/icons";
 import store from "../../store";
-import { GetAdminDetails } from "../redux/actions/authAction";
+import { GetAdminDetails } from "../Redux/Actions/authAction";
 
 
 const { Header, Sider, Content} = Layout;

@@ -1,4 +1,4 @@
-import {AUTH_SUCCESS, AUTH_FAIL} from '../actions/type'
+import {AUTH_SUCCESS, AUTH_FAIL} from '../Actions/type'
 
 const initialState = {
     auth:[],

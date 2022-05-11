@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, Form, Input, message } from "antd";
-import { PostWithAuthTokenAsync } from "../config/api";
+import { PostWithAuthTokenAsync } from "../Config/api";
 
 const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   const validateMessages = {

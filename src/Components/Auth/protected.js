@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { GetAdminDetails } from '../redux/actions/authAction'
+import { GetAdminDetails } from '../Redux/Actions/authAction'
 import store from "../../store";
 
 
