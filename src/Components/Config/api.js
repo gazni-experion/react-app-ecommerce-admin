@@ -32,6 +32,25 @@ export const PostWithAuthTokenAsync = async (url, data) => {
     }
 }
 
+export const GetAsync = async (url) => {
+    delete axios.defaults.headers.common['Authorization'];
+    try {
+        const res = await axios.get(baseUrl + url);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const PostAsync = async (url,data) => {
+    delete axios.defaults.headers.common['Authorization'];
+    try {
+        const res = await axios.post(baseUrl + url,data);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
