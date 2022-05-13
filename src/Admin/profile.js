@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { GetAdminDetails } from "../Store/Actions/authAction";
 import { EditFilled } from '@ant-design/icons';
 import ChangePassword from "./changePassword";
-import {GetWithAuthTokenAsync} from '../Components/Config/api'
+import {GetAsync} from '../Components/Config/api'
 
 function Profile() {
   const[pic,setPic] = useState('');
@@ -17,7 +17,7 @@ function Profile() {
     useEffect(() => {
         if (localStorage.getItem("token")) {
           console.log(profileDetails);
-          GetWithAuthTokenAsync("/userImages/read_one.php")
+          GetAsync("/userImages/read_one.php?id="+profileDetails.userId)
           .then(res => {
             console.log(res.data.image);
           setPic(res.data.image);

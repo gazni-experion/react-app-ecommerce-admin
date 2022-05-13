@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import { Upload, message, Avatar } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import {GetWithAuthTokenAsync, PostWithAuthTokenAsync} from '../Components/Config/api'
+import {GetAsync, PostAsync} from '../Components/Config/api'
 import {success, error} from './feedBack'
 
 export const UploadImage = ({getUrl ,postUrl, id}) => {
     const [fileList, setFileList] = useState('');
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(()=>{
-      console.log(id);
-      GetWithAuthTokenAsync(`${getUrl}`)
+      GetAsync(`${getUrl+id}`)
           .then(res => {
             console.log(res.data.image);
             setFileList(res.data.image);
           })
           .catch(err => {console.log(err);});
-    });
+    },[refresh]);
 
       const onChange = (info) => {
         console.log(info);
@@ -23,11 +23,13 @@ export const UploadImage = ({getUrl ,postUrl, id}) => {
           id: id,
           name:info.file.name
         });
-        console.log(fileName);
-        PostWithAuthTokenAsync(`${postUrl}`,fileName)
+        PostAsync(`${postUrl}`,fileName)
         .then(res => {
           console.log(res);
-          success("Image updated successfully");
+          setRefresh(refresh+1);
+          if (res.status ===200) {
+            success("Image updated successfully");
+          }
         })
         .catch(err => {
           console.log(err);
@@ -46,7 +48,6 @@ export const UploadImage = ({getUrl ,postUrl, id}) => {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        
         onChange={onChange}
         onPreview={onPreview}
       >

@@ -91,7 +91,7 @@ function UpdateProfile() {
             <Input />
           </Form.Item>
           <Form.Item label="Profile Picture" name="pic" >
-          <UploadImage getUrl="/userImages/read_one.php" postUrl="/userImages/update.php" id={profileDetails.userId} />
+          <UploadImage getUrl="/userImages/read_one.php?id=" postUrl="/userImages/update.php" id={profileDetails.userId} />
           </Form.Item>
           <Form.Item
             label="Name"
