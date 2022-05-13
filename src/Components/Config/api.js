@@ -31,6 +31,17 @@ export const PostWithAuthTokenAsync = async (url, data) => {
         console.log(error);
     }
 }
+export const GetWithAuthTokenAsync = async (url) => {
+    if(localStorage.getItem('token')){
+        setAuthToken(localStorage.getItem('token'));
+    } 
+    try {
+        const res = await axios.post(baseUrl + url,config);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const GetAsync = async (url) => {
     delete axios.defaults.headers.common['Authorization'];

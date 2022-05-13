@@ -142,6 +142,7 @@ function AddUser( ) {
             <Input placeholder="Enter Email" />
           </Form.Item>
           <Form.Item
+          hidden={true}
             name="passwords"
             label="Password"
             rules={[

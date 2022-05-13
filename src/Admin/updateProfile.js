@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   Input,
@@ -6,16 +6,15 @@ import {
   Button,
   Space,
   Card,
-  Select,
-  Avatar,
-  Upload
+  Select
 } from "antd";
-import { LeftOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { LeftOutlined} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../Styles/styles.css";
 import { PostWithAuthTokenAsync } from "../Components/Config/api";
 import store from "../Store/store";
 import { GetAdminDetails } from "../Store/Actions/authAction";
+import {UploadImage} from "../Components/uploadImage";
 
 
 function UpdateProfile() {
@@ -30,7 +29,6 @@ function UpdateProfile() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       console.log(profileDetails);
-
       form.setFieldsValue({
         userId: profileDetails.userId,
         userName: profileDetails.userName,
@@ -52,7 +50,7 @@ function UpdateProfile() {
       console.log(res);
       if (res.status) {
         alert("Profile update succefully")
-        navigate('/admin/dashboard')
+        navigate('/admin/profile')
       }
 })
 .catch((e)=>{
@@ -88,8 +86,12 @@ function UpdateProfile() {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+         
           <Form.Item label="userId" name="userId" hidden="true">
             <Input />
+          </Form.Item>
+          <Form.Item label="Profile Picture" name="pic" >
+          <UploadImage getUrl="/userImages/read_one.php" postUrl="/userImages/update.php" id={profileDetails.userId} />
           </Form.Item>
           <Form.Item
             label="Name"
