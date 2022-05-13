@@ -13,7 +13,7 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
 
   // Enable and Disable the submit button
-  const [update,setUpate] = useState(true);
+  const [update, setUpate] = useState(true);
   return (
     <Modal
       visible={visible}
@@ -25,7 +25,6 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
         form
           .validateFields()
           .then((values) => {
-            // form.resetFields();
             onCreate(values);
           })
           .catch((info) => {
@@ -62,8 +61,8 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
           rules={[
             {
               required: true,
-              min:6,
-              max:15
+              min: 6,
+              max: 15,
             },
             {
               pattern:
@@ -111,21 +110,18 @@ const ChangePassword = () => {
 
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
-    PostWithAuthTokenAsync('/users/changePassword.php',values)
-    .then((res)=> {
-    console.log(res.data.message);
-    if (res.data.message === "Password updated successfully") {
-      message.success(res.data.message)
-      localStorage.clear();
-      navigate('/');
-    }
-    else{
-      message.error(res.data.message)
-    }
-    })
-    .catch((e)=>console.log(e));
-    
-    // setVisible(false);
+    PostWithAuthTokenAsync("/users/changePassword.php", values)
+      .then((res) => {
+        console.log(res.data.message);
+        if (res.data.message === "Password updated successfully") {
+          message.success(res.data.message);
+          localStorage.clear();
+          navigate("/"); // Redirect to login page
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   return (

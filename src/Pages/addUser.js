@@ -1,12 +1,10 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { Form, Input, message, Button, Space, Card, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Styles/styles.css";
 
-
-
-function AddUser( ) {
+function AddUser() {
   let navigate = useNavigate();
   const [form] = Form.useForm();
   const location = useLocation();
@@ -15,74 +13,78 @@ function AddUser( ) {
   console.log(location.state.userId);
 
   useEffect(() => {
-    fetch(`http://localhost/RESTAPI/ecommerce/api/users/read_one.php?id=${location.state.userId}`)
+    fetch(
+      `http://localhost/RESTAPI/ecommerce/api/users/read_one.php?id=${location.state.userId}`
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          form.setFieldsValue({
+            userId: result.userId,
+            userName: result.userName,
+            email: result.email,
+            passwords: result.passwords,
+            phoneNumber: result.phoneNumber,
+            gender: result.gender,
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, [form, location.state.userId]);
+
+  const onFinish = (values) => {
+    console.log(values.userId);
+    if (values.userId) {
+      fetch("http://localhost/RESTAPI/ecommerce/api/users/update.php", {
+        body: JSON.stringify(values),
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log(JSON.stringify(values));
+            if (result.message === "User updated successfully") {
+              console.log(result);
+              message.success(result.message);
+              navigate("/admin/users");
+            } else {
+              message.error(result.message);
+            }
+          },
+          (error) => {
+            console.log(error);
+            message.error(error.message);
+          }
+        );
+    } else {
+      fetch("http://localhost/RESTAPI/ecommerce/api/users/create.php", {
+        body: JSON.stringify(values),
+        method: "POST",
+      })
         .then((res) => res.json())
         .then(
           (result) => {
             console.log(result);
-            form.setFieldsValue({
-              userId:result.userId,
-              userName:result.userName,
-              email:result.email,
-              passwords: result.passwords,
-              phoneNumber: result.phoneNumber,
-              gender:result.gender
-            });
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            console.log(error);
-          }
-        );
-  }, [form, location.state.userId]);
-
-
-  const onFinish = (values) => {
-    console.log(values.userId);
-    if(values.userId){
-      fetch("http://localhost/RESTAPI/ecommerce/api/users/update.php",{body:JSON.stringify(values), method:"POST"})
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        console.log(JSON.stringify(values));
-          if (result.message === "User updated successfully") {
-              console.log(result);
-              message.success(result.message);
-              navigate("/admin/users");
-          }
-          else{
-              message.error(result.message);
-          }
-      },
-      (error) => {
-          console.log(error);
-          message.error(error.message);
-        },
-      );
-    }
-    else{
-    fetch("http://localhost/RESTAPI/ecommerce/api/users/create.php",{body:JSON.stringify(values), method:"POST"})
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        console.log(result);
-        console.log(JSON.stringify(values));
-          if (result.message === "User added successfully!") {
+            console.log(JSON.stringify(values));
+            if (result.message === "User added successfully!") {
               console.log(result);
               message.success(result.message);
               form.resetFields();
-          }
-          else{
+            } else {
               message.error(result.message);
+            }
+          },
+          (error) => {
+            console.log(error);
+            message.error(error.message);
           }
-      },
-      (error) => {
-          console.log(error);
-          message.error(error.message);
-        },
-      );
+        );
     }
   };
 
@@ -116,7 +118,7 @@ function AddUser( ) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item label="userId" name="userId" hidden={true} >
+          <Form.Item label="userId" name="userId" hidden={true}>
             <Input />
           </Form.Item>
           <Form.Item
@@ -142,7 +144,7 @@ function AddUser( ) {
             <Input placeholder="Enter Email" />
           </Form.Item>
           <Form.Item
-          hidden={true}
+            hidden={true}
             name="passwords"
             label="Password"
             rules={[

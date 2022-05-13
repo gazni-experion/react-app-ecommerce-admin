@@ -138,9 +138,14 @@ function Users() {
     <div className="container">
       <h2>Users</h2>
       <hr />
-      <Button type="primary" onClick={() => navigate("/admin/add-user", {
-                  state: { name: "Add User", userId: "" },
-                })}>
+      <Button
+        type="primary"
+        onClick={() =>
+          navigate("/admin/add-user", {
+            state: { name: "Add User", userId: "" },
+          })
+        }
+      >
         Add User
       </Button>
       <input

@@ -1,11 +1,8 @@
-import './App.css';
-import Login from './Auth/login';
-
+import "./App.css";
+import Login from "./Auth/login";
 
 function App() {
-  return (
-    <Login />
-  );
+  return <Login />;
 }
 
 export default App;

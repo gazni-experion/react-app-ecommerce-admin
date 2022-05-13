@@ -1,35 +1,26 @@
 import React, { useEffect } from "react";
-import {
-  Form,
-  Input,
-  message,
-  Button,
-  Space,
-  Card,
-  Select
-} from "antd";
-import { LeftOutlined} from "@ant-design/icons";
+import { Form, Input, message, Button, Space, Card, Select } from "antd";
+import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../Styles/styles.css";
 import { PostWithAuthTokenAsync } from "../Components/Config/api";
 import store from "../Store/store";
 import { GetAdminDetails } from "../Store/Actions/authAction";
-import {UploadImage} from "../Components/uploadImage";
-
+import { UploadImage } from "../Components/uploadImage";
 
 function UpdateProfile() {
-  
   // Call redux hook
   GetAdminDetails();
 
   let navigate = useNavigate();
   const [form] = Form.useForm();
-  let profileDetails = store.getState().auth.auth.data;
+  let profileDetails = store.getState().auth.auth.data; // Setting the profile details from the redux store
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       console.log(profileDetails);
       form.setFieldsValue({
+        // Setting the profile details from the redux store in the update form
         userId: profileDetails.userId,
         userName: profileDetails.userName,
         email: profileDetails.email,
@@ -44,19 +35,18 @@ function UpdateProfile() {
   const onFinish = (values) => {
     let data = JSON.stringify(values);
     console.log(data);
-    
-    PostWithAuthTokenAsync("/users/update.php", data)
-    .then((res) => {
-      console.log(res);
-      if (res.status) {
-        alert("Profile update succefully")
-        navigate('/admin/profile')
-      }
-})
-.catch((e)=>{
-  console.log(e);
-  alert("Something went wrong please try again!");
-    });
+    PostWithAuthTokenAsync("/users/update.php", data) // Updating the profile details
+      .then((res) => {
+        console.log(res);
+        if (res.status) {
+          alert("Profile update succefully");
+          navigate("/admin/profile"); // Navigating to the profile page
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong please try again!");
+      });
   };
 
   const onFinishFailed = () => {
@@ -86,12 +76,15 @@ function UpdateProfile() {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-         
           <Form.Item label="userId" name="userId" hidden="true">
             <Input />
           </Form.Item>
-          <Form.Item label="Profile Picture" name="pic" >
-          <UploadImage getUrl="/userImages/read_one.php?id=" postUrl="/userImages/update.php" id={profileDetails.userId} />
+          <Form.Item label="Profile Picture" name="pic">
+            <UploadImage
+              getUrl="/userImages/read_one.php?id="
+              postUrl="/userImages/update.php"
+              id={profileDetails.userId}
+            />
           </Form.Item>
           <Form.Item
             label="Name"

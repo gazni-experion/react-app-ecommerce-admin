@@ -14,21 +14,18 @@ import {
   UnorderedListOutlined,
   BookOutlined,
   PlaySquareOutlined,
-  LogoutOutlined
+  LogoutOutlined,
 } from "@ant-design/icons";
 import store from "../../Store/store";
 import { GetAdminDetails } from "../../Store/Actions/authAction";
 
-
-const { Header, Sider, Content} = Layout;
-
-const user = localStorage.getItem('userName');
+const { Header, Sider, Content } = Layout;
 
 function Navbar() {
-
   GetAdminDetails();
+  const user = localStorage.getItem("userName");
 
-let loginStatus = store.getState().auth.isLoggedIn;
+  let loginStatus = store.getState().auth.isLoggedIn;
 
   let navigate = useNavigate();
   const [state, setState] = useState(false);
@@ -38,14 +35,13 @@ let loginStatus = store.getState().auth.isLoggedIn;
   }, [loginStatus]);
   const toggle = () => setState(!state);
   const logout = () => {
-      // Navigate to Login page
-      navigate("/");
-      localStorage.clear();
+    // Navigate to Login page
+    navigate("/");
+    localStorage.clear();
   };
 
-  let items =[
+  let items = [
     {
-      
       key: "1",
       icon: <DashboardOutlined />,
       label: <Link to="dashboard">DASHBOARD</Link>,
@@ -59,7 +55,6 @@ let loginStatus = store.getState().auth.isLoggedIn;
       key: "3",
       icon: <OrderedListOutlined />,
       label: <Link to="orders">ORDERS</Link>,
-
     },
     {
       key: "4",
@@ -91,7 +86,7 @@ let loginStatus = store.getState().auth.isLoggedIn;
       icon: <BookOutlined />,
       label: <Link to="about-us">ABOUT US</Link>,
     },
-  ] ;
+  ];
 
   return (
     <Layout hasSider>
@@ -100,40 +95,43 @@ let loginStatus = store.getState().auth.isLoggedIn;
           overflow: "auto",
           height: "100%",
           backgroundColor: "#fff",
-          color: "black"
+          color: "black",
         }}
         trigger={null}
         collapsible
         collapsed={state}
-        
       >
-        <div className="logo" >Logo</div>
+        <div className="logo">Logo</div>
         <Menu
           theme="light"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items ={items}
-          style={{ height: "500%",  color: "#833768" }}
+          items={items}
+          style={{ height: "500%", color: "#833768" }}
         />
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 5, fontSize:25,  backgroundColor:"#ffe8ff18"}}>
+        <Header
+          className="site-layout-background"
+          style={{ padding: 5, fontSize: 25, backgroundColor: "#ffe8ff18" }}
+        >
           {state ? (
             <MenuUnfoldOutlined onClick={toggle} />
           ) : (
             <MenuFoldOutlined onClick={toggle} />
           )}
-         <span className="header">
-         {loginStatus ? ( 
-        <Link to="profile">Welcome back - {user}</Link>
- ) : (<Link to="/">Please Login</Link>)
-         }
+          <span className="header">
+            {loginStatus ? (
+              <Link to="profile">Welcome back - {user}</Link>
+            ) : (
+              <Link to="/">Please Login</Link>
+            )}
           </span>
-          {loginStatus?(
-          <Tooltip placement="bottom" title="logout" onClick={logout}>
-         <LogoutOutlined />
-         </Tooltip>): null }
-         
+          {loginStatus ? (
+            <Tooltip placement="bottom" title="logout" onClick={logout}>
+              <LogoutOutlined />
+            </Tooltip>
+          ) : null}
         </Header>
         <Content
           className="site-layout-background"
@@ -145,7 +143,6 @@ let loginStatus = store.getState().auth.isLoggedIn;
         >
           <Outlet />
         </Content>
-    
       </Layout>
     </Layout>
   );

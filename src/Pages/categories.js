@@ -9,10 +9,7 @@ import {
   Typography,
   message,
 } from "antd";
-import {
-  EditTwoTone,
-  DeleteTwoTone,
-} from "@ant-design/icons";
+import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../Styles/styles.css";
 
@@ -76,22 +73,23 @@ function Categories() {
   const search = (value) => {
     if (value === "") {
       setRefresh(refresh + 1);
-    }
-    else{
-      fetch(`http://localhost/RESTAPI/ecommerce/api/categories/search.php?s=${value}`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setData(result.records);
-          // console.log(result.records);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          console.log(error);
-        }
-      );
+    } else {
+      fetch(
+        `http://localhost/RESTAPI/ecommerce/api/categories/search.php?s=${value}`
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setData(result.records);
+            // console.log(result.records);
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   };
 
@@ -142,31 +140,30 @@ function Categories() {
       const row = await form.validateFields();
       // let data = JSON.stringify(row);
       // console.log(data);
-      
+
       //Inserting form values to db
       fetch("http://localhost/RESTAPI/ecommerce/api/categories/update.php", {
-      body: JSON.stringify(row),
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.message === "Category was updated.") {
-            console.log(result);
-            message.success(result.message);
-            setRefresh(refresh + 1);
-            setEditingKey("");
-            console.log(refresh);
-          } else {
-            message.error(result.message);
+        body: JSON.stringify(row),
+        method: "PUT",
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            if (result.message === "Category was updated.") {
+              console.log(result);
+              message.success(result.message);
+              setRefresh(refresh + 1);
+              setEditingKey("");
+              console.log(refresh);
+            } else {
+              message.error(result.message);
+            }
+          },
+          (error) => {
+            console.log(error);
+            message.error("Unable to update category !!");
           }
-        },
-        (error) => {
-          console.log(error);
-          message.error("Unable to update category !!");
-        }
-      ); 
-      
+        );
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -178,7 +175,7 @@ function Categories() {
       dataIndex: "categoryId",
       width: "5%",
       editable: true,
-      defaultSortOrder: 'descend',
+      defaultSortOrder: "descend",
       sorter: (a, b) => a.categoryId - b.categoryId,
     },
     {
@@ -201,16 +198,13 @@ function Categories() {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link
-              id={record.categoryId}
-              onClick={save}
-            >
+            <Typography.Link id={record.categoryId} onClick={save}>
               Save
             </Typography.Link>
             <Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              Cancel
-            </Popconfirm>
+              <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+                Cancel
+              </Popconfirm>
             </Typography.Link>
           </span>
         ) : (
@@ -255,21 +249,18 @@ function Categories() {
     <div className="container">
       <h2>Categories</h2>
       <hr />
-      <Button
-        type="primary"
-        onClick={() => navigate("/admin/add-category")}
-      >
+      <Button type="primary" onClick={() => navigate("/admin/add-category")}>
         Add Category
       </Button>
       <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Search categories..."
-          onChange={(e) => {
-            search(e.target.value);
-          }}
-        />
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search categories..."
+        onChange={(e) => {
+          search(e.target.value);
+        }}
+      />
       <Form form={form} component={false}>
         <Table
           components={{
