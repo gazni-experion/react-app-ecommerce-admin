@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Modal, Form, Input, message } from "antd";
-import { PostWithAuthTokenAsync } from "../Components/Config/api";
+import { Modal, Form, Input } from "antd";
 
-const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
+export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   const validateMessages = {
     required: "${label} is required!",
     range: "${label} must be between ${min} and ${max}",
@@ -103,46 +101,3 @@ const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
     </Modal>
   );
 };
-
-const ChangePassword = () => {
-  let navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
-
-  const onCreate = (values) => {
-    console.log("Received values of form: ", values);
-    PostWithAuthTokenAsync("/users/changePassword.php", values)
-      .then((res) => {
-        console.log(res.data.message);
-        if (res.data.message === "Password updated successfully") {
-          message.success(res.data.message);
-          localStorage.clear();
-          navigate("/"); // Redirect to login page
-        } else {
-          message.error(res.data.message);
-        }
-      })
-      .catch((e) => console.log(e));
-  };
-
-  return (
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
-        Change Password
-      </Button>
-      <ChangePasswordForm
-        visible={visible}
-        onCreate={onCreate}
-        onCancel={() => {
-          setVisible(false);
-        }}
-      />
-    </div>
-  );
-};
-
-export default ChangePassword;

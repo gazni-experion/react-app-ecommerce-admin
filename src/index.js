@@ -16,9 +16,9 @@ import AddUser from "./Pages/addUser";
 import AboutUs from "./Pages/aboutUs";
 import { Provider } from "react-redux";
 import store from "./Store/store";
-import UpdateProfile from "./Admin/updateProfile";
-import Profile from "./Admin/profile";
-import Protected from "./Auth/protected";
+import UpdateProfile from "./Pages/Admin/updateProfile";
+import Profile from "./Pages/Admin/profile";
+import Protected from "./Components/protected";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

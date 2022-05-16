@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Avatar } from "antd";
-import "../Styles/styles.css";
+import "../../Styles/styles.css";
 import { Link } from "react-router-dom";
-import store from "../Store/store";
+import store from "../../Store/store";
 import { useNavigate } from "react-router-dom";
-import { GetAdminDetails } from "../Store/Actions/authAction";
+import { GetAdminDetails } from "../../Store/Actions/authAction";
 import { EditFilled } from "@ant-design/icons";
 import ChangePassword from "./changePassword";
-import { GetAsync } from "../Components/Config/api";
+import { GetAsync } from "../../Components/Config/api";
 
 function Profile() {
   const [pic, setPic] = useState("");
@@ -40,7 +40,7 @@ function Profile() {
           </Link>
         }
       >
-        {pic && <Avatar size={100} src={require("../Assets/" + pic)} />}
+        {pic && <Avatar size={100} src={require("../../Assets/" + pic)} />}
         <div className="details">
           <span>
             <h3>User Id:{profileDetails.userId}</h3>
