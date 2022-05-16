@@ -3,7 +3,7 @@ import { Form, Input, message, Button, Space, Card, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../Styles/styles.css";
-import { PostWithAuthTokenAsync } from "../Components/Config/api";
+import { PostWithAuthTokenAsync } from "../Utils/Config/api";
 import store from "../Store/store";
 import { GetAdminDetails } from "../Store/Actions/authAction";
 import { UploadImage } from "../Components/uploadImage";

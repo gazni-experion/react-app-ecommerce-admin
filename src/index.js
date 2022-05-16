@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/home";
 import Users from "./Pages/users";
 import Orders from "./Pages/orders";
-import Products from "./Pages/products";
+import Products from "./Pages/changePassword";
 import Navbar from "./Components/Layout/navbar";
 import NoPage from "./Pages/noPage";
 import Categories from "./Pages/categories";
@@ -16,9 +16,9 @@ import AddUser from "./Pages/addUser";
 import AboutUs from "./Pages/aboutUs";
 import { Provider } from "react-redux";
 import store from "./Store/store";
-import UpdateProfile from "./Admin/updateProfile";
-import Profile from "./Admin/profile";
-import Protected from "./Auth/protected";
+import UpdateProfile from "./Pages/updateProfile";
+import Profile from "./Pages/profile";
+import Protected from "./Components/Auth/protected";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Upload, Avatar } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { GetAsync, PostAsync } from "../Components/Config/api";
+import { GetAsync, PostAsync } from "../Utils/Config/api";
 import { success, error } from "./feedBack";
 
 export const UploadImage = ({ getUrl, postUrl, id }) => {
@@ -17,7 +17,7 @@ export const UploadImage = ({ getUrl, postUrl, id }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [refresh]); // refresh the image on change
+  }, [refresh, getUrl, id]); // refresh the image on change
 
   const onChange = (info) => {
     console.log(info);

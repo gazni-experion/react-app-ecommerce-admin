@@ -12,6 +12,8 @@ import {
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../Styles/styles.css";
+import { GetAsync, PostAsync } from "../Utils/Config/api";
+import { success, error } from "../Components/feedBack";
 
 const EditableCell = ({
   editing,
@@ -53,12 +55,27 @@ function Categories() {
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost/RESTAPI/ecommerce/api/categories/read.php")
-      .then((res) => res.json())
-      .then(
+    GetAsync("/categories/read.php").then(
+      (result) => {
+        setData(result.data.records);
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [refresh]);
+
+  // Search filter
+  const search = (value) => {
+    if (value === "") {
+      setRefresh(refresh + 1);
+    } else {
+      GetAsync(`/categories/search.php?s=${value}`).then(
         (result) => {
-          setData(result.records);
-          console.log(result.records);
+          setData(result.data.records);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -67,29 +84,6 @@ function Categories() {
           console.log(error);
         }
       );
-  }, [refresh]);
-
-  // Search filter
-  const search = (value) => {
-    if (value === "") {
-      setRefresh(refresh + 1);
-    } else {
-      fetch(
-        `http://localhost/RESTAPI/ecommerce/api/categories/search.php?s=${value}`
-      )
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setData(result.records);
-            // console.log(result.records);
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            console.log(error);
-          }
-        );
     }
   };
 
@@ -112,27 +106,24 @@ function Categories() {
 
   const deleteCategory = (record) => {
     console.log(record);
-    fetch("http://localhost/RESTAPI/ecommerce/api/categories/delete.php", {
-      body: JSON.stringify({ id: record.categoryId }),
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.message === "Category was deleted.") {
-            console.log(result);
-            message.success(result.message);
-            setRefresh(refresh + 1);
-            console.log(refresh);
-          } else {
-            message.error(result.message);
-          }
-        },
-        (error) => {
-          console.log(error);
-          message.error(error.message);
+    PostAsync(
+      "/categories/delete.php",
+      JSON.stringify({ id: record.categoryId })
+    ).then(
+      (result) => {
+        if (result.data.message === "Category was deleted.") {
+          console.log(result);
+          success(result.data.message);
+          setRefresh(refresh + 1);
+        } else {
+          error(result.data.message);
         }
-      );
+      },
+      (error) => {
+        console.log(error);
+        error(error.data.message);
+      }
+    );
   };
 
   const save = async () => {

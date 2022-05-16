@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { GetAdminDetails } from "../Store/Actions/authAction";
 import { EditFilled } from "@ant-design/icons";
 import ChangePassword from "./changePassword";
-import { GetAsync } from "../Components/Config/api";
+import { GetAsync } from "../Utils/Config/api";
 
 function Profile() {
   const [pic, setPic] = useState("");

@@ -1,6 +1,6 @@
 import { AUTH_SUCCESS, AUTH_FAIL } from "./type";
 import { useDispatch } from "react-redux";
-import { PostWithAuthTokenAsync } from "../../Components/Config/api";
+import { PostWithAuthTokenAsync } from "../../Utils/Config/api";
 
 export const GetAdminDetails = () => {
   const dispatch = useDispatch();

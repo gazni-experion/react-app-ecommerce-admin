@@ -1,9 +1,8 @@
 import "../Styles/styles.css";
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Space } from "antd";
-import "../Components/Config/api";
-import { GetAsync, PostAsync } from "../Components/Config/api";
 import { EditFilled } from "@ant-design/icons";
+import { GetAsync, PostAsync } from "../Utils/Config/api";
 import { success, error } from "../Components/feedBack";
 
 function AboutUs() {

@@ -2,25 +2,24 @@ import React from "react";
 import { Form, Input, message, Button, Space, Card } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import {  PostAsync } from "../Utils/Config/api";
+import { success, error } from "../Components/feedBack";
 
 function AddCategory() {
   let navigate = useNavigate();
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    fetch("http://localhost/RESTAPI/ecommerce/api/categories/create.php", {
-      body: JSON.stringify(values),
-      method: "POST",
-    })
+    PostAsync("/categories/create.php",JSON.stringify(values))
       .then((res) => res.json())
       .then(
         (result) => {
           if (result.message === "Category was created.") {
             console.log(result);
-            message.success(result.message);
+            success(result.message);
             form.resetFields();
           } else {
-            message.error(result.message);
+            error(result.message);
           }
         },
         (error) => {
