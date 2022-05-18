@@ -209,3 +209,18 @@ margin-bottom: 2%;
   background-color:rgba(255, 240, 245, 0.308) ;
   border: none;
 }
+
+.validate{
+  color: grey;
+  font-size: small;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.validate .invalid{
+  color: red;
+}
+
+.validate .valid{
+  color: green;
+}
