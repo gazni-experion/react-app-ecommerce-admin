@@ -215,6 +215,7 @@ margin-bottom: 2%;
   font-size: small;
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 3%;
 }
 .validate .MuiSvgIcon-root{
   font-size: large;
@@ -232,4 +233,9 @@ float: inline-start;
 
 .validate .valid{
   color: green;
+}
+
+.buttons{
+  display: flex;
+  gap: 1%;
 }

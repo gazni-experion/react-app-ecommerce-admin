@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "formik-antd";
+import { Form, Input, SubmitButton, ResetButton } from "formik-antd";
 import { Formik, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import { Modal } from "antd";
@@ -53,6 +53,7 @@ const passwordSchema = Yup.object().shape({
 export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   // Enable and Disable the submit button
   const [formData, setFormData] = useState(null);
+  const [enable, setEnable] = useState(true);
 
   const validateYupSchemaMultiErrors = async (values, schema) => {
     if (values && values.currentPassword) {
@@ -64,6 +65,7 @@ export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
     }
     try {
       await validateYupSchema(values, schema);
+      setEnable(false);
       return {};
     } catch (e) {
       return yupToFormErrors(e, { showMultipleFieldErrors: true });
@@ -75,12 +77,14 @@ export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
       closable="true"
       visible={visible}
       title="Change Password"
-      maskClosable="true"
       onCancel={onCancel}
+      destroyOnClose="true"
+      footer={null}
     >
       <Formik
         initialValues={{ currentPassword: "", newPassword: "", confirm: "" }}
-        // onSubmit={(values, props) => onhandleSubmit(values, props)}
+        // onSubmit={(values) => onhandleSubmit(values)}
+        onSubmit={(values) => onCreate(values)}
         validate={(values) =>
           validateYupSchemaMultiErrors(values, passwordSchema)
         }
@@ -191,6 +195,10 @@ export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
                 placeholder="Re-enter your new password"
               />
             </Form.Item>
+            <span className="buttons">
+              <ResetButton>Reset</ResetButton>
+              <SubmitButton disabled={enable}>Submit</SubmitButton>
+            </span>
           </Form>
         )}
       </Formik>
