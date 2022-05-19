@@ -216,6 +216,15 @@ margin-bottom: 2%;
   display: flex;
   justify-content: space-evenly;
 }
+.validate .MuiSvgIcon-root{
+  font-size: large;
+  margin-right: 1%;
+margin-left: 0;
+padding: 1px;
+position: inherit;
+float: inline-start;
+  /* position: absolute; */
+}
 
 .validate .invalid{
   color: red;

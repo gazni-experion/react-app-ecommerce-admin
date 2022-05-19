@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Form, Input } from "formik-antd";
+import { Form, Input, Button } from "formik-antd";
 import { Formik, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import { Modal } from "antd";
 import { ValidatePassword } from "../../Components/validatePassword";
 import { yupToFormErrors } from "./yupToFormErrors";
 import "../../Styles/styles.css";
+import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const passwordSchema = Yup.object().shape({
   currentPassword: Yup.string()
@@ -13,26 +15,35 @@ const passwordSchema = Yup.object().shape({
     .max(15, "Too Long!")
     .required("Current password is required!"),
   newPassword: Yup.string()
-    .min(6, "minimum")
+    .min(6, "Password should be minimum 6 characters")
     .max(15, "Password should be less than 15 characters!")
-    .matches(/[A-Z].*[A-Z]/, "2_uppercase")
-    .matches(/[a-z].*[a-z]/, "2_lowercase")
-    // .matches(/[!@#$%^&()-=+{};:,<.>].{0,2}/, "Atmost 2 special characters")
-    // .test(
-    //   "atMost2SpecialCharacters",
-    //   "Atmost 2 special characters are allowed!",
-    //   function (value) {
-    //     return new Promise((resolve) => {
-    //       const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/gi;
-    //       const allFoundCharacters = value.match(specialChars);
-    //       if (allFoundCharacters.length > 2) {
-    //         resolve(false);
-    //       } else {
-    //         resolve(true);
-    //       }
-    //     });
-    //   }
-    // )
+    .matches(
+      /[A-Z].*[A-Z]/,
+      "Password must contain atleast 2 uppercase characters"
+    )
+    .matches(
+      /[a-z].*[a-z]/,
+      "Password must contain atleast 2 lowercase characters"
+    )
+    .matches(
+      /[!@#$%^&()-=+{};:,<.>]/,
+      "Atmost 2 special characters are allowed!"
+    )
+    .test(
+      "atMost2SpecialCharacters",
+      "Atmost 2 special characters are allowed!",
+      function (value) {
+        return new Promise((resolve) => {
+          const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/gi;
+          const allFoundCharacters = value.match(specialChars);
+          if (allFoundCharacters && allFoundCharacters.length > 2) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        });
+      }
+    )
     .required("Password is Required"),
   confirm: Yup.string("Confirm Password")
     .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
@@ -60,7 +71,13 @@ export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
   };
 
   return (
-    <Modal visible={visible} title="Change Password" closable="true">
+    <Modal
+      closable="true"
+      visible={visible}
+      title="Change Password"
+      maskClosable="true"
+      onCancel={onCancel}
+    >
       <Formik
         initialValues={{ currentPassword: "", newPassword: "", confirm: "" }}
         // onSubmit={(values, props) => onhandleSubmit(values, props)}
@@ -88,40 +105,86 @@ export const ChangePasswordForm = ({ visible, onCreate, onCancel }) => {
               <span
                 className={ValidatePassword(
                   errors.newPassword,
-                  "2_uppercase",
+                  "Password must contain atleast 2 uppercase characters",
                   touched,
                   values.newPassword
                 )}
               >
+                {ValidatePassword(
+                  errors.newPassword,
+                  "Password must contain atleast 2 uppercase characters",
+                  touched,
+                  values.newPassword
+                ) === "valid" ? (
+                  <CheckCircleIcon />
+                ) : (
+                  <CircleOutlinedIcon />
+                )}
                 2 uppercase characters
               </span>
               <span
                 className={ValidatePassword(
                   errors.newPassword,
-                  "2_lowercase",
+                  "Password must contain atleast 2 lowercase characters",
                   touched,
                   values.newPassword
                 )}
               >
+                {ValidatePassword(
+                  errors.newPassword,
+                  "Password must contain atleast 2 lowercase characters",
+                  touched,
+                  values.newPassword
+                ) === "valid" ? (
+                  <CheckCircleIcon />
+                ) : (
+                  <CircleOutlinedIcon />
+                )}
                 2 lowercase characters
               </span>
               <span
                 className={ValidatePassword(
                   errors.newPassword,
-                  "minimum",
+                  "Password should be minimum 6 characters",
                   touched,
                   values.newPassword
                 )}
               >
+                {ValidatePassword(
+                  errors.newPassword,
+                  "Password should be minimum 6 characters",
+                  touched,
+                  values.newPassword
+                ) === "valid" ? (
+                  <CheckCircleIcon />
+                ) : (
+                  <CircleOutlinedIcon />
+                )}
                 Minimum 6 characters
               </span>
 
-              {/* <span className={ValidatePassword(...props)}>
-                    Almost 2 special characters
-                  </span> */}
+              <span
+                className={ValidatePassword(
+                  errors.newPassword,
+                  "Atmost 2 special characters are allowed!",
+                  touched,
+                  values.newPassword
+                )}
+              >
+                {ValidatePassword(
+                  errors.newPassword,
+                  "Atmost 2 special characters are allowed!",
+                  touched,
+                  values.newPassword
+                ) === "valid" ? (
+                  <CheckCircleIcon />
+                ) : (
+                  <CircleOutlinedIcon />
+                )}
+                Almost 2 special characters
+              </span>
             </div>
 
-            {/* <ErrorMessage name="newPassword" /> */}
             <Form.Item name="confirm" label="Confirm Password">
               <Input.Password
                 name="confirm"
