@@ -5,17 +5,41 @@ import Typography from "@mui/material/Typography";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import GrainIcon from "@mui/icons-material/Grain";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import store from "../Store/store";
 import { GetAdminDetails } from "../Store/Actions/authAction";
+import { GetAsync } from "../Components/Config/api";
 
-const cust = "4";
-const orders = "13";
-let users = "7";
 function Home() {
+  const [users, setUsers] = useState("");
+  const [cust, setCust] = useState("");
+  const [orders, setOrders] = useState("");
   GetAdminDetails();
   useEffect(() => {
-    console.log(store.getState());
+    GetAsync("/users/nos.php") //users
+      .then((res) => {
+        setUsers(res.data.users);
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+    GetAsync("/customers/nos.php") //Customers
+      .then((res) => {
+        setCust(res.data.customers);
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+    GetAsync("/orders/nos.php") //Orders
+      .then((res) => {
+        setOrders(res.data.orders);
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   return (
