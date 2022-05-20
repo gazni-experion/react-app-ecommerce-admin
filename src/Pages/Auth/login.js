@@ -14,11 +14,7 @@ const validationSchema = yup.object({
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  passwords: yup
-    .string("Enter your password")
-    .min(6, "Password should be of minimum 6 characters length")
-    .max(15, "Password should be of maximum 15 characters length")
-    .required("Password is required"),
+  passwords: yup.string("Enter your password").required("Password is required"),
 });
 
 function Login() {
@@ -76,9 +72,10 @@ function Login() {
           name="email"
           label="Email"
           value={formik.values.email}
+          onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email || formik.errors.email}
+          helperText={formik.touched.email && formik.errors.email}
         />
         <TextField
           fullWidth
@@ -88,8 +85,9 @@ function Login() {
           type="password"
           value={formik.values.passwords}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           error={formik.touched.passwords && Boolean(formik.errors.passwords)}
-          helperText={formik.touched.passwords || formik.errors.passwords}
+          helperText={formik.touched.passwords && formik.errors.passwords}
         />
         <Button
           color="primary"
